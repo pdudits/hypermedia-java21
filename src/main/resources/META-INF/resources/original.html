@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <title>Hello, world!</title>
+    <style>
+      td > input[type], td > button {
+        margin-bottom: 0;
+      }
+
+      body > main {
+        --block-spacing-vertical: calc(var(--spacing)*2)
+      }
+
+      table {
+        margin-left: calc(-1 * var(--spacing));
+        margin-right: calc(-1 * var(--spacing));
+        width: auto
+      }
+      
+    </style>
+  </head>
+  <body>
+    <nav class="container-fluid">
+      <ul>
+        <li><a href="#" aria-label="Home">
+          <svg fill="none" height="25" viewBox="0 0 25 25" width="25" xmlns="http://www.w3.org/2000/svg">
+            <title>Home</title>
+            <path clip-rule="evenodd" d="m13.2013 3.14414c-.28-.23806-.6914-.23806-.9714 0l-7.00005 5.95c-.00008.00007-.00016.00014-.00024.00021l-2.99976 2.54975c-.3156.2683-.35398.7416-.08571 1.0572.26826.3156.74158.354 1.05719.0857l1.76426-1.4996v8.4282c0 .9665.7835 1.75 1.75 1.75h12.00001c.9665 0 1.75-.7835 1.75-1.75v-8.4282l1.7643 1.4996c.3156.2683.7889.2299 1.0571-.0857.2683-.3156.2299-.7889-.0857-1.0572l-3-2.54996zm5.7643 6.86826-6.25-5.31248-6.25001 5.31248v9.7032c0 .1381.11193.25.25.25h12.00001c.1381 0 .25-.1119.25-.25z" fill="#000" fill-rule="evenodd"/></svg>
+        </a></li>
+        <li><strong>A shop</strong></li>
+      </ul>
+      <ul>
+        <li><a href="#">Link 1</a></li>
+        <li><a href="#">Link 2</a></li>
+      </ul>
+    </nav>
+    <main class="container">
+      <article>
+        <h1>Shopping cart</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Article Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Smartphone</td>
+            <td>$500</td>
+            <td><input type="number" value="1"></td>
+            <td>$500</td>
+            <td>$500</td>
+            <td><button aria-label="Remove Smartphone" class="secondary outline">Remove</button></td>
+          </tr>
+          <tr>
+            <td>Laptop</td>
+            <td>$1000</td>
+            <td><input type="number" value="1"></td>
+            <td>$1000</td>
+            <td>$1000</td>
+            <td><button aria-label="Remove Laptop"  class="secondary outline">Remove</button></td>
+          </tr>
+          <tr>
+            <td>Headphones</td>
+            <td>$100</td>
+            <td><input type="number" value="1"></td>
+            <td>$100</td>
+            <td>$100</td>
+            <td><button aria-label="Remove Headphones" class="secondary outline">Remove</button></td>
+          </tr>
+          <tr>
+            <td>Smartwatch</td>
+            <td>$200</td>
+            <td><input type="number" value="1"></td>
+            <td>$200</td>
+            <td>$200</td>
+            <td><button aria-label="Remove Smartwatch" class="secondary outline">Remove</button></td>
+          </tr>
+          <tr>
+            <td>Camera</td>
+            <td>$800</td>
+            <td><input type="number" value="1"></td>
+            <td>$800</td>
+            <td>$800</td>
+            <td><button aria-label="Remove Camera"  class="secondary outline">Remove</button></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4"><strong>Total:</strong></td>
+            <td>$2600</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </article>
+    </main>
+  </body>
+</html>
