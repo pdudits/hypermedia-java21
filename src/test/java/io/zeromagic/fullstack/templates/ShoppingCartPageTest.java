@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import io.zeromagic.fullstack.templates.ShoppingCart.Article;
-import io.zeromagic.fullstack.templates.ShoppingCart.Item;
+import io.zeromagic.fullstack.domain.ShoppingCart.Article;
+import io.zeromagic.fullstack.domain.ShoppingCart.Item;
 
 public class ShoppingCartPageTest {
     static List<Item> items = List.of(

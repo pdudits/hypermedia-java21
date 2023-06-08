@@ -3,9 +3,10 @@ package io.zeromagic.fullstack.templates;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
-import static java.lang.StringTemplate.RAW;
 
-import io.zeromagic.fullstack.templates.ShoppingCart.Item;
+import io.zeromagic.fullstack.domain.ShoppingCart.Item;
+
+import static java.lang.StringTemplate.RAW;
 
 public class ShoppingCartPage extends Page {
     private final List<Item> items;
