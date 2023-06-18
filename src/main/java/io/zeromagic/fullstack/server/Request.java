@@ -12,6 +12,7 @@ public class Request {
     private final HttpExchange exchange;
 	private final String contextPath;
     private Map<String,String> queryParameters;
+    private String[] pathSegments;
 
 	Request(HttpExchange exchange, String contextPath) {
         this.exchange = exchange;
@@ -24,10 +25,12 @@ public class Request {
      * @return
      */
     public String getPathSegment(int index) {
-        String requestPath = exchange.getRequestURI().getPath();
-        String[] segments = requestPath.substring(contextPath.length()).split("/");
-        if (segments.length > index + 1) {
-            return segments[index + 1];
+        if (pathSegments == null) {
+            String requestPath = exchange.getRequestURI().getPath();
+            pathSegments = requestPath.substring(contextPath.length()).split("/");
+        }
+        if (index >= 0 && pathSegments.length <= index) {
+            return pathSegments[index];
         }
         return null;
     }
@@ -89,5 +92,21 @@ public class Request {
             return formParameters;
         }
         return null;
+    }
+
+    /** Return a record, where type of the record represents method type, and String parameter its first parameter.
+     *  Explicit records exist for GET, POST, PUT, DELETE methods, fallback record HttpMethod(String method, String path) is
+     * used for other cases
+    */
+    public HttpMethodMatch matchMethodPath() {
+        String method = exchange.getRequestMethod();
+        String path = getPathSegment(0);
+        return switch (method) {
+            case "GET" -> new GET(path);
+            case "POST" -> new POST(path);
+            case "PUT" -> new PUT(path);
+            case "DELETE" -> new DELETE(path);
+            default -> new HttpMethod(method, path);
+        };
     }
 }

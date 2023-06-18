@@ -7,7 +7,17 @@ import java.lang.StringTemplate.Processor;
 import java.util.Collection;
 import java.util.stream.Stream;
 
+import io.zeromagic.fullstack.server.Response;
+
 public interface Framework {
+
+    static Response ok(StringTemplate template) {
+        return Response.ok("text/html", out -> template.process(new WriterProcessor(out)));
+    }
+
+    static Response ok(Templated root) {
+        return ok(root.template());
+    }
 
     interface Templated {
         StringTemplate template();

@@ -66,10 +66,10 @@ public class ShoppingCartPage extends Page {
     }
     
     private Stream<StringTemplate> items() {
-      return items.stream().map(this::item);
+      return items.stream().map(ShoppingCartPage::item);
     }
 
-    private StringTemplate item(Item i) {
+    static StringTemplate item(Item i) {
       return RAW."""
           <tr>
           <td>\{i.article().name()}</td>
