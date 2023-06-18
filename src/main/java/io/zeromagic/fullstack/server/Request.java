@@ -3,6 +3,7 @@ package io.zeromagic.fullstack.server;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class Request {
             String requestPath = exchange.getRequestURI().getPath();
             pathSegments = requestPath.substring(contextPath.length()).split("/");
         }
-        if (index >= 0 && pathSegments.length <= index) {
+        if (index >= 0 && index <= pathSegments.length) {
             return pathSegments[index];
         }
         return null;

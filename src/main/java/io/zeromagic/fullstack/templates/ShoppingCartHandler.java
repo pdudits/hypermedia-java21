@@ -25,12 +25,17 @@ public class ShoppingCartHandler implements Server.Handler {
         if (cart == null) {
             return null;
         }
-        return switch (request.matchMethodPath()) {
-            case GET(var p) when p == null -> renderCart(cart);
+        var methodAndPath = request.matchMethodPath();
+        System.out.println(methodAndPath);
+        return switch (methodAndPath) {
+            // not as good as hoped for, I cannot write GET(null) or POST("increment") directly
+            // that gets interpreted as method call instead of pattern matching (which makes sense on second thought)
+            case GET(var p) when "".equals(p) -> renderCart(cart);
             case POST(var action) -> switch(action) {
                 case "increment" -> incrementItem(cart, Integer.parseInt(request.getPathSegment(1)));
                 case "decrement" -> decrementItem(cart, Integer.parseInt(request.getPathSegment(1)));
-                default -> null;
+                // null has to be explicitly added, even in presence of default
+                case null, default -> null;
             };
             default -> null;
         };

@@ -14,6 +14,7 @@ public abstract class Page implements Framework.Templated {
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+                <script src="https://unpkg.com/htmx.org@1.9.2"></script>
                 <title>\{title()}</title>
                 <style>
            

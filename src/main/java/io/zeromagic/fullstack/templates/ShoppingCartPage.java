@@ -71,9 +71,9 @@ public class ShoppingCartPage extends Page {
 
     static StringTemplate item(Item i) {
       return RAW."""
-          <tr>
+          <tr hx-target="this" hx-swap="outerHTML">
           <td>\{i.article().name()}</td>
-          <td>\{i.quantity()}</td>
+          <td><a role="button" href="#" hx-post="decrement/\{i.id()}" }>-</a> \{i.quantity()} <a role="button" href="#" hx-post="increment/\{i.id()}">+</a></td>
           <td>\{i.article().decimalPrice()}</td>
           <td>\{i.article().decimalPrice().multiply(BigDecimal.valueOf(i.quantity()))}</td>
           </tr>

@@ -12,13 +12,13 @@ public class ShoppingCart {
         }
     }
     
-    public record Item(Article article, int quantity) {
+    public record Item(int id, Article article, int quantity) {
         public Item increment() {
-            return new Item(article, quantity+1);
+            return new Item(id, article, quantity+1);
         }
 
         public Item decrement() {
-            return quantity > 1 ? new Item(article, quantity-1) : this;
+            return quantity > 1 ? new Item(id, article, quantity-1) : this;
         }
     }
 
@@ -41,7 +41,7 @@ public class ShoppingCart {
     }
 
     public ShoppingCart add(String name, int priceInCents, int quantity) {
-        items.add(new Item(new Article(name, priceInCents), quantity));
+        items.add(new Item(items.size(), new Article(name, priceInCents), quantity));
         return this;
     }
 
