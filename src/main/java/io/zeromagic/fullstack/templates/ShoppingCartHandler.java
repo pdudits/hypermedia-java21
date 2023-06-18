@@ -43,12 +43,12 @@ public class ShoppingCartHandler implements Server.Handler {
 
     private Response incrementItem(ShoppingCart cart, int itemId) throws IOException {
         var item = cart.increment(itemId);
-        return Framework.ok(ShoppingCartPage.item(item));
+        return Framework.ok(ShoppingCartPage.item(item), ShoppingCartPage.total(cart.items()));
     }
 
     private Response decrementItem(ShoppingCart cart, int itemId) throws IOException {
         var item = cart.decrement(itemId);
-        return Framework.ok(ShoppingCartPage.item(item));
+        return Framework.ok(ShoppingCartPage.item(item), ShoppingCartPage.total(cart.items()));
     }
 
     private Response renderCart(ShoppingCart cart) throws IOException {

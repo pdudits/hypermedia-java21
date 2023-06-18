@@ -15,6 +15,10 @@ public interface Framework {
         return Response.ok("text/html", out -> template.process(new WriterProcessor(out)));
     }
 
+    static Response ok(StringTemplate... templates) {
+        return Response.ok("text/html", out -> new WriterProcessor(out).processValue(Stream.of(templates)));
+    }
+
     static Response ok(Templated root) {
         return ok(root.template());
     }

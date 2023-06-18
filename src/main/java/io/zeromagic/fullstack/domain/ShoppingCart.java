@@ -20,6 +20,10 @@ public class ShoppingCart {
         public Item decrement() {
             return quantity > 1 ? new Item(id, article, quantity-1) : this;
         }
+
+        public BigDecimal totalPrice() {
+            return article.decimalPrice().multiply(BigDecimal.valueOf(quantity));
+        }
     }
 
     private ArrayList<Item> items = new ArrayList<>();

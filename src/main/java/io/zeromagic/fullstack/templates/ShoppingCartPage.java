@@ -1,9 +1,11 @@
 package io.zeromagic.fullstack.templates;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
+import io.zeromagic.fullstack.domain.ShoppingCart;
 import io.zeromagic.fullstack.domain.ShoppingCart.Item;
 
 import static java.lang.StringTemplate.RAW;
@@ -56,7 +58,7 @@ public class ShoppingCartPage extends Page {
         <tfoot>
           <tr>
             <td colspan="3"><strong>Total:</strong></td>
-            <td>\{itemTotal()}</td>
+            \{total(items)}
             <td></td>
            </tr>
         </tfoot>
@@ -75,12 +77,18 @@ public class ShoppingCartPage extends Page {
           <td>\{i.article().name()}</td>
           <td><a role="button" href="#" hx-post="decrement/\{i.id()}" }>-</a> \{i.quantity()} <a role="button" href="#" hx-post="increment/\{i.id()}">+</a></td>
           <td>\{i.article().decimalPrice()}</td>
-          <td>\{i.article().decimalPrice().multiply(BigDecimal.valueOf(i.quantity()))}</td>
+          <td>\{i.totalPrice()}</td>
           </tr>
           """;
     }
 
-    private BigDecimal itemTotal() {
-      return items.stream().map(i -> i.article().decimalPrice()).reduce(BigDecimal.ZERO, BigDecimal::add);
+    static StringTemplate total(Collection<Item> items) {
+      return RAW."""
+          <td id="total" hx-swap-oob="#total">\{itemTotal(items)}</td>
+          """;
+    }
+
+    static BigDecimal itemTotal(Collection<Item> items) {
+      return items.stream().map(i -> i.totalPrice()).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
