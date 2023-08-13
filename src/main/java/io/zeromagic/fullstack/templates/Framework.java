@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.StringTemplate.Processor;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.stream.Stream;
 
 import io.zeromagic.fullstack.server.Response;
@@ -59,29 +60,17 @@ public interface Framework {
                 case null -> {}
                 case Templated t -> t.template().process(this);
                 case StringTemplate t -> t.process(this);
-                case Iterable<?> c -> {
-                    for (var it = c.iterator(); it.hasNext();) {
-                        var e = it.next();
-                        processValue(e);
-                        if (it.hasNext() && !(e instanceof Templated || e instanceof StringTemplate)) {
-                            out.write(" ");
-                        }
-                    }
-                }
-                case Stream<?> c -> c.forEach(t -> {
-                    try {
-                        processValue(t);
-                    } catch (IOException e) {
-                        sneakyThrow(e);
-                    }
-                });
+                case Iterable<?> c -> processIterator(c.iterator());
+                case Stream<?> c -> processIterator(c.iterator());
                 default -> out.write(String.valueOf(value));
             }
         }
 
-        @SuppressWarnings("unchecked")
-        private static <E extends Throwable> void sneakyThrow(Throwable e) throws E {
-            throw (E)e;
-        } 
+        private void processIterator(Iterator<?> it) throws IOException {
+            while (it.hasNext()) {
+                var e = it.next();
+                processValue(e);
+            }
+        }
     }
 }
