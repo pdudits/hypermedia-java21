@@ -55,12 +55,10 @@ public class Request {
         if (query != null) {
             String[] queryParamsArray = query.split("&");
             for (String param : queryParamsArray) {
-                String[] keyValue = param.split("=");
-                if (keyValue.length == 2) {
-                    var key = URLDecoder.decode(keyValue[0], StandardCharsets.UTF_8);
-                    var value = URLDecoder.decode(keyValue[1], StandardCharsets.UTF_8);
-                    queryParams.put(key, value);
-                }
+                String[] keyValue = param.split("=",2);
+                var key = URLDecoder.decode(keyValue[0], StandardCharsets.UTF_8);
+                var value = URLDecoder.decode(keyValue[1], StandardCharsets.UTF_8);
+                queryParams.put(key, value);
             }
         }
         return queryParams;
