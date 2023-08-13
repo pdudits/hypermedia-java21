@@ -22,10 +22,10 @@ public class Main {
         cart.add("Camera", 80000, 1);
 
         var server = new Server(8080);
-        // TODO: report bug -- using _ causes LinkageError: 
+        // JEP 443 (preview) using _ causes LinkageError: https://bugs.openjdk.org/browse/JDK-8313323
         // Error: LinkageError occurred while loading main class io.zeromagic.fullstack.Main
         // java.lang.ClassFormatError: Illegal field name "" in class io/zeromagic/fullstack/Main
-        var cartHandler = new ShoppingCartHandler(_x -> cart);
+        var cartHandler = new ShoppingCartHandler(_c -> cart);
         server.addHandler("/", cartHandler);
         server.start();       
 
