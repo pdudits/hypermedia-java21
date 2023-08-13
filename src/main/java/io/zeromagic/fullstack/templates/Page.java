@@ -2,6 +2,7 @@ package io.zeromagic.fullstack.templates;
 
 import static java.lang.StringTemplate.RAW;
 
+import java.net.URI;
 import java.util.List;
 
 public abstract class Page implements Framework.Templated {
@@ -14,10 +15,10 @@ public abstract class Page implements Framework.Templated {
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-                <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+                \{ libraryUrl() != null ? RAW."""
+                  <script src="\{libraryUrl()}"></script>""" : null }
                 <script>
-                // needed for out of band responses into table
-                htmx.config.useTemplateFragments = true;
+                \{ extraScript() }
                 </script>
                 <title>\{title()}</title>
                 <style>
@@ -26,7 +27,7 @@ public abstract class Page implements Framework.Templated {
                     --block-spacing-vertical: calc(var(--spacing)*2)
                   }
                   
-                  \{extraStyles()}
+                  \{ extraStyles() }
                 </style>
               </head>
               <body>
@@ -59,6 +60,18 @@ public abstract class Page implements Framework.Templated {
 
     protected String homeLink() {
         return "/";
+    }
+
+    protected URI libraryUrl() {
+      return URI.create("https://unpkg.com/htmx.org@1.9.2");
+    }
+
+    protected String extraScript() {
+      // needed for out of band responses into table
+      return """
+        htmx.config.useTemplateFragments = true;
+        """;
+
     }
 
     protected Object navigation() {
