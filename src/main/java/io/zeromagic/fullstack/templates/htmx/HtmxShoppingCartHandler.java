@@ -1,4 +1,4 @@
-package io.zeromagic.fullstack.templates;
+package io.zeromagic.fullstack.templates.htmx;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -10,12 +10,13 @@ import io.zeromagic.fullstack.server.*;
 
 import io.zeromagic.fullstack.domain.ShoppingCart;
 import io.zeromagic.fullstack.server.Response;
+import io.zeromagic.fullstack.templates.Framework;
 
-public class ShoppingCartHandler implements Server.Handler {
+public class HtmxShoppingCartHandler implements Server.Handler {
 
     private Function<Request, ShoppingCart> cartLoader;
 
-    public ShoppingCartHandler(Function<Request, ShoppingCart> cartLoader ) {
+    public HtmxShoppingCartHandler(Function<Request, ShoppingCart> cartLoader ) {
         this.cartLoader = cartLoader;
     }
 
@@ -43,16 +44,18 @@ public class ShoppingCartHandler implements Server.Handler {
 
     private Response incrementItem(ShoppingCart cart, int itemId) throws IOException {
         var item = cart.increment(itemId);
-        return Framework.ok(ShoppingCartPage.item(item), ShoppingCartPage.total(cart.items()));
+        var page = new HtmxShoppingCartPage(cart.items());
+        return Framework.ok(page.item(item), page.total(cart.items()));
     }
 
     private Response decrementItem(ShoppingCart cart, int itemId) throws IOException {
         var item = cart.decrement(itemId);
-        return Framework.ok(ShoppingCartPage.item(item), ShoppingCartPage.total(cart.items()));
+        var page = new HtmxShoppingCartPage(cart.items());
+        return Framework.ok(page.item(item), page.total(cart.items()));
     }
 
     private Response renderCart(ShoppingCart cart) throws IOException {
-        return Framework.ok(new ShoppingCartPage(cart.items()));
+        return Framework.ok(new HtmxShoppingCartPage(cart.items()));
     }
     
 }

@@ -15,11 +15,7 @@ public abstract class Page implements Framework.Templated {
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-                \{ libraryUrl() != null ? RAW."""
-                  <script src="\{libraryUrl()}"></script>""" : null }
-                <script>
-                \{ extraScript() }
-                </script>
+                \{libraryInit()}
                 <title>\{title()}</title>
                 <style>
            
@@ -62,20 +58,14 @@ public abstract class Page implements Framework.Templated {
         return "/";
     }
 
-    protected URI libraryUrl() {
-      return URI.create("https://unpkg.com/htmx.org@1.9.2");
+    protected Object libraryInit() {
+      return null;
     }
 
-    protected String extraScript() {
-      // needed for out of band responses into table
-      return """
-        htmx.config.useTemplateFragments = true;
-        """;
-
-    }
-
-    protected Object navigation() {
-        return null;
+    protected List<NavigationLink> navigation() {
+        return List.of(new NavigationLink("Plain", "/plain/"), 
+          new NavigationLink("Unpoly", "/unpoly/"),
+          new NavigationLink("HTMX", "/htmx/"));
     }
 
     protected abstract Object main();
@@ -86,6 +76,4 @@ public abstract class Page implements Framework.Templated {
             return RAW."<li><a href='\{href}'>\{title}</a></li>";
         }
     }
-
-    // TODO: NavigationDropdown
 }

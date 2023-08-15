@@ -7,9 +7,9 @@ import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executors;
 
-
+import io.zeromagic.fullstack.templates.IndexHandler;
 import io.zeromagic.fullstack.domain.ShoppingCart;
-import io.zeromagic.fullstack.templates.ShoppingCartHandler;
+import io.zeromagic.fullstack.templates.htmx.HtmxShoppingCartHandler;
 import io.zeromagic.fullstack.server.Server;
 
 public class Main {
@@ -25,8 +25,9 @@ public class Main {
         // JEP 443 (preview) using _ causes LinkageError: https://bugs.openjdk.org/browse/JDK-8313323
         // Error: LinkageError occurred while loading main class io.zeromagic.fullstack.Main
         // java.lang.ClassFormatError: Illegal field name "" in class io/zeromagic/fullstack/Main
-        var cartHandler = new ShoppingCartHandler(_c -> cart);
-        server.addHandler("/", cartHandler);
+        var cartHandler = new HtmxShoppingCartHandler(_c -> cart);
+        server.addHandler("/", new IndexHandler());
+        server.addHandler("/htmx/", cartHandler);
         server.start();       
 
         System.out.println(STR."Server started at port \{server.getAddress()}");

@@ -30,7 +30,7 @@ public class Request {
             String requestPath = exchange.getRequestURI().getPath();
             pathSegments = requestPath.substring(contextPath.length()).split("/");
         }
-        if (index >= 0 && index <= pathSegments.length) {
+        if (index >= 0 && index < pathSegments.length) {
             return pathSegments[index];
         }
         return null;
@@ -100,6 +100,9 @@ public class Request {
     public HttpMethodMatch matchMethodPath() {
         String method = exchange.getRequestMethod();
         String path = getPathSegment(0);
+        if (path == null) {
+            path = "";
+        }
         return switch (method) {
             case "GET" -> new GET(path);
             case "POST" -> new POST(path);

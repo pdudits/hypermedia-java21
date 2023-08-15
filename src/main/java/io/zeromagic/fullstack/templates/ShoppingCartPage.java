@@ -13,7 +13,7 @@ import static java.lang.StringTemplate.RAW;
 public class ShoppingCartPage extends Page {
     private final List<Item> items;
 
-    ShoppingCartPage(List<Item> items) {
+    public ShoppingCartPage(List<Item> items) {
       this.items = items;
     }
 
@@ -45,15 +45,12 @@ public class ShoppingCartPage extends Page {
         <table>
         <thead>
           <tr>
-            <th>Article Name</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-            <th>Total Price</th>
-            <th></th>
+            <th>Article Name</th> <th>Quantity</th>
+            <th>Unit Price</th> <th>Total Price</th>
           </tr>
         </thead>
         <tbody>
-           \{items()}
+          \{items()}
         </tbody>
         <tfoot>
           <tr>
@@ -67,28 +64,34 @@ public class ShoppingCartPage extends Page {
         """;
     }
     
-    private Stream<StringTemplate> items() {
-      return items.stream().map(ShoppingCartPage::item);
+    protected Stream<StringTemplate> items() {
+      return items.stream().map(this::item);
     }
 
-    static StringTemplate item(Item i) {
+    protected StringTemplate item(Item i) {
       return RAW."""
-          <tr hx-target="this" hx-swap="outerHTML">
+          <tr>
           <td>\{i.article().name()}</td>
-          <td><a role="button" href="#" hx-post="decrement/\{i.id()}" }>-</a> \{i.quantity()} <a role="button" href="#" hx-post="increment/\{i.id()}">+</a></td>
+          <td>
+            <form method="post">
+              <button role="button" formaction="decrement/\{i.id()}" }>-</a>
+              \{i.quantity()} 
+              <button role="button" formaction="increment/\{i.id()}">+</a>
+            </form>
+          </td>
           <td>\{i.article().decimalPrice()}</td>
           <td>\{i.totalPrice()}</td>
           </tr>
           """;
     }
 
-    static StringTemplate total(Collection<Item> items) {
+    protected StringTemplate total(Collection<Item> items) {
       return RAW."""
-          <td id="total" hx-swap-oob="#total">\{itemTotal(items)}</td>
+          <td id="total">\{itemTotal(items)}</td>
           """;
     }
 
-    static BigDecimal itemTotal(Collection<Item> items) {
+    protected static BigDecimal itemTotal(Collection<Item> items) {
       return items.stream().map(i -> i.totalPrice()).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
