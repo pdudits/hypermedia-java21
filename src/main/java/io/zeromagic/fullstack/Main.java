@@ -11,6 +11,7 @@ import io.zeromagic.fullstack.templates.IndexHandler;
 import io.zeromagic.fullstack.domain.ShoppingCart;
 import io.zeromagic.fullstack.templates.htmx.HtmxShoppingCartHandler;
 import io.zeromagic.fullstack.templates.plain.PlainHandler;
+import io.zeromagic.fullstack.templates.unpoly.UnpolyHandler;
 import io.zeromagic.fullstack.server.Server;
 
 public class Main {
@@ -30,6 +31,7 @@ public class Main {
         server.addHandler("/", new IndexHandler());
         server.addHandler("/htmx/", cartHandler);
         server.addHandler("/plain/", new PlainHandler(_c -> cart));
+        server.addHandler("/unpoly/", new UnpolyHandler(_c -> cart));
         server.start();       
 
         System.out.println(STR."Server started at port \{server.getAddress()}");

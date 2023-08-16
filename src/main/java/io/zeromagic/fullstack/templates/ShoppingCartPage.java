@@ -34,6 +34,13 @@ public class ShoppingCartPage extends Page {
             margin-right: calc(-1 * var(--spacing));
             width: auto
         }
+
+        tbody tr td:nth-child(2) {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: nowrap;
+          flex: 1 1 auto;
+        }
         """;
     }
 
@@ -56,7 +63,6 @@ public class ShoppingCartPage extends Page {
           <tr>
             <td colspan="3"><strong>Total:</strong></td>
             \{total(items)}
-            <td></td>
            </tr>
         </tfoot>
         </table>
