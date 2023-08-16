@@ -2,6 +2,7 @@ package io.zeromagic.fullstack.server;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -110,5 +111,9 @@ public class Request {
             case "DELETE" -> new DELETE(path);
             default -> new HttpMethod(method, path);
         };
+    }
+
+    public URI resolve(String relativePath) {
+        return exchange.getRequestURI().resolve(relativePath);
     }
 }

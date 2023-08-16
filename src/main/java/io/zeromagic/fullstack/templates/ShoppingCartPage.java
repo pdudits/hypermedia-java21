@@ -74,9 +74,9 @@ public class ShoppingCartPage extends Page {
           <td>\{i.article().name()}</td>
           <td>
             <form method="post">
-              <button role="button" formaction="decrement/\{i.id()}" }>-</a>
+              <button role="button" formaction="decrement/\{i.id()}" }>-</button>
               \{i.quantity()} 
-              <button role="button" formaction="increment/\{i.id()}">+</a>
+              <button role="button" formaction="increment/\{i.id()}">+</button>
             </form>
           </td>
           <td>\{i.article().decimalPrice()}</td>

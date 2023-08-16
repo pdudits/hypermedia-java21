@@ -6,6 +6,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.net.URI;
 import java.util.Map;
 
 public record Response(int statusCode, Map<String, String> headers, BodyOutput body) {
@@ -16,6 +17,11 @@ public record Response(int statusCode, Map<String, String> headers, BodyOutput b
 
     public static Response html(int status, BodyWriter body) {
         return new Response(status, Map.of("Content-Type", "text/html;charset=UTF-8"), utf8(body));
+    }
+
+    public static Response found(URI location) {
+        return new Response(302, Map.of("Location", location.toString()), out -> {
+        });
     }
 
     public static BodyOutput encoded(Charset charset, BodyWriter body) {
