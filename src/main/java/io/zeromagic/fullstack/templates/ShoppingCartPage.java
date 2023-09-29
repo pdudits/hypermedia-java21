@@ -25,23 +25,37 @@ public class ShoppingCartPage extends Page {
     @Override
     protected String extraStyles() {
         return """
-        td > input[type], td > button {
-            margin-bottom: 0;
-        }                  
+                table {
+                    margin-left: calc(-1 * var(--spacing));
+                    margin-right: calc(-1 * var(--spacing));
+                }
+                
+                table * {
+                    --typography-spacing-vertical: 0;
+                }
+                
+                table button {
+                    --spacing: 0;
+                }
+    
+                td.price {
+                  text-align: right;
+                }                      
 
-        table {
-            margin-left: calc(-1 * var(--spacing));
-            margin-right: calc(-1 * var(--spacing));
-            width: auto
-        }
-
-        tbody tr td:nth-child(2) {
-          display: flex;
-          flex-direction: column;
-          flex-wrap: nowrap;
-          flex: 1 1 auto;
-        }
-        """;
+                tbody tr td:nth-child(2), tbody tr td:nth-child(2) > * {
+                  display: flex;
+                  align-items: baseline;
+                  flex-wrap: nowrap;
+                  & * {
+                    flex: 1 1 auto;
+                  }
+                }
+                       
+                td strong {
+                       min-width: 2em;
+                       text-align: center;
+                }        
+                """;
     }
 
     @Override
@@ -80,20 +94,25 @@ public class ShoppingCartPage extends Page {
           <td>\{i.article().name()}</td>
           <td>
             <form method="post">
-              <button role="button" formaction="decrement/\{i.id()}" }>-</button>
-              \{i.quantity()} 
-              <button role="button" formaction="increment/\{i.id()}">+</button>
+              \{button("decrement", i.id(), "-")}
+              <strong>\{i.quantity()}</strong>
+              \{button("increment", i.id(), "+")}
             </form>
           </td>
-          <td>\{i.article().decimalPrice()}</td>
-          <td>\{i.totalPrice()}</td>
+          <td class="price">\{i.article().decimalPrice()}</td>
+          <td class="price">\{i.totalPrice()}</td>
           </tr>
           """;
+    }
+    
+    protected StringTemplate button(String action, int id, String label) {
+        return RAW."""
+                   <button role="button" formaction="\{action}/\{id}">\{label}</button>""";
     }
 
     protected StringTemplate total(Collection<Item> items) {
       return RAW."""
-          <td id="total">\{itemTotal(items)}</td>
+          <td id="total" class="price">\{itemTotal(items)}</td>
           """;
     }
 

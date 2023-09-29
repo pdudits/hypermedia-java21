@@ -24,9 +24,11 @@ public class HtmxShoppingCartPage extends ShoppingCartPage {
             <tr hx-target="this" hx-swap="outerHTML">
             <td>\{i.article().name()}</td>
             <td>
+                <div>
                 <a role="button" href="#" hx-post="decrement/\{i.id()}" }>-</a>
-                \{i.quantity()} 
+                <strong>\{i.quantity()}</strong>
                 <a role="button" href="#" hx-post="increment/\{i.id()}">+</a>
+                </div>
             </td>
             <td>\{i.article().decimalPrice()}</td>
             <td>\{i.totalPrice()}</td>

@@ -20,9 +20,19 @@ public class UnpolyShoppingCartPage extends ShoppingCartPage {
     @Override
     protected String libraryInit() {
       return """
-      <script src="https://unpkg.com/unpoly@3.3.0/unpoly.min.js"></script>
-      <link rel="stylesheet" href="https://unpkg.com/unpoly@3.3.0/unpoly.min.css">
-      """;
+              <script src="https://unpkg.com/unpoly@3.3.0/unpoly.min.js"></script>
+              <script>
+                     up.link.config.followSelectors.push('a[href]');
+                     up.link.config.noFollowSelectors.push('nav a[href]');
+              </script>
+              <link rel="stylesheet" href="https://unpkg.com/unpoly@3.3.0/unpoly.min.css">
+              <style type="text/css">
+                up-modal-box {
+                   background: none;
+                   box-shadow: none;
+                }
+              </style>      
+              """;
     }
 
     @Override
@@ -32,13 +42,13 @@ public class UnpolyShoppingCartPage extends ShoppingCartPage {
           <td>\{i.article().name()}</td>
           <td>
             <form method="post" up-submit up-target="table">
-              <button role="button" formaction="decrement/\{i.id()}" }>-</button>
-              \{i.quantity()} 
-              <button role="button" formaction="increment/\{i.id()}">+</button>
+              \{button("decrement", i.id(), "-")}
+              <strong>\{i.quantity()}</strong>
+              \{button("increment", i.id(), "+")}
             </form>
           </td>
-          <td>\{i.article().decimalPrice()}</td>
-          <td>\{i.totalPrice()}</td>
+          <td class="price">\{i.article().decimalPrice()}</td>
+          <td class="price">\{i.totalPrice()}</td>
           </tr>
           """;
     }
