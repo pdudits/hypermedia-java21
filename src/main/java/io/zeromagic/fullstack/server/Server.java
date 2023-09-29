@@ -13,6 +13,7 @@ import com.sun.net.httpserver.HttpServer;
 
 public class Server {
     private final com.sun.net.httpserver.HttpServer server;
+    private static final System.Logger LOGGER = System.getLogger("Server");
 
     public Server(HttpServer server) {
         this.server = server;
@@ -44,6 +45,7 @@ public class Server {
     }
 
     void handleException(HttpExchange exchange, Exception e) throws IOException {
+        LOGGER.log(System.Logger.Level.ERROR, "Rendering error", e);
         exchange.getResponseHeaders().set("Content-Type", "text/plain;charset=UTF-8");
         exchange.sendResponseHeaders(500, 0);
         try (var response = new PrintWriter(exchange.getResponseBody(), true, StandardCharsets.UTF_8)) {
