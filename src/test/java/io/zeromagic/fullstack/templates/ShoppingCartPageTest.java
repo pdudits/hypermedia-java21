@@ -9,11 +9,11 @@ import io.zeromagic.fullstack.domain.ShoppingCart.Item;
 
 public class ShoppingCartPageTest {
     static List<Item> items = List.of(
-        new Item(0, new Article("Smartphone", 500_00), 1),
-        new Item(1, new Article("Laptop", 1000_00), 1),
-        new Item(2, new Article("Headphones", 100_00), 1),
-        new Item(3, new Article("Smartwatch", 200_00), 1),
-        new Item(4, new Article("Camera", 800_00), 1));
+        new Item(0, new Article("Smartphone", null, 500_00), 1),
+        new Item(1, new Article("Laptop", null, 1000_00), 1),
+        new Item(2, new Article("Headphones", null, 100_00), 1),
+        new Item(3, new Article("Smartwatch", null, 200_00), 1),
+        new Item(4, new Article("Camera", null, 800_00), 1));
 
     @Test
     public void testRender() {

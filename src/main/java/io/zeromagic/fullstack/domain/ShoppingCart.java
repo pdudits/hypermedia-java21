@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class ShoppingCart {
-    public record Article(String name, int price) {
+    public record Article(String name, String description, int price) {
         public BigDecimal decimalPrice() {
             return BigDecimal.valueOf(price, 2);
         }
@@ -45,9 +45,15 @@ public class ShoppingCart {
     }
 
     public ShoppingCart add(String name, int priceInCents, int quantity) {
-        items.add(new Item(items.size(), new Article(name, priceInCents), quantity));
+        items.add(new Item(items.size(), new Article(name, null, priceInCents), quantity));
         return this;
     }
+    
+    public ShoppingCart add(String name, int priceInCents, String description, int quantity) {
+        items.add(new Item(items.size(), new Article(name, description, priceInCents), quantity));
+        return this;
+    }
+    
 
     private Item update(int index, Function<Item,Item> transform) {
         var newItem = transform.apply(items.get(index));

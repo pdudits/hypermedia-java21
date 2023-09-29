@@ -27,6 +27,7 @@ public class Main {
         // JEP 443 (preview) using _ causes LinkageError: https://bugs.openjdk.org/browse/JDK-8313323
         // Error: LinkageError occurred while loading main class io.zeromagic.fullstack.Main
         // java.lang.ClassFormatError: Illegal field name "" in class io/zeromagic/fullstack/Main
+        // to be fixed in 21.0.1
         var cartHandler = new HtmxShoppingCartHandler(_c -> cart);
         server.addHandler("/", new IndexHandler());
         server.addHandler("/htmx/", cartHandler);
