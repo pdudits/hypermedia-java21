@@ -54,7 +54,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                     <configuration>
                         <mainClass>io.zeromagic.fullstack.Main</mainClass> 
-                        <executable>java</executable>
+                        <executable>${java.home}/bin/java</executable>
                         <arguments>
                             <argument>--enable-preview</argument>
                             <argument>-classpath</argument>
