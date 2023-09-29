@@ -32,6 +32,9 @@ public class Server {
         server.stop(delay);
     }
 
+    /**
+     * Add a handler for a sub-path
+     */
     public void addHandler(String contextPath, Handler handler) {
         server.createContext(contextPath, new HandlerAdapter(handler, contextPath));
     }
@@ -40,7 +43,17 @@ public class Server {
         return server.getAddress();
     }
 
+    /**
+     * Request processor.
+     */
     public interface Handler {
+        /**
+         * Handle the request, returning non-null response if it matches any of the
+         * paths
+         * @param request request to process
+         * @return a response, if the request matched any of the actions of this handler
+         * @throws IOException
+         */
         Response handle(Request request) throws IOException;
     }
 

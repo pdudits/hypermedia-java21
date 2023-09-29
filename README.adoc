@@ -1,0 +1,37 @@
+= Hypermedia Web Stack With Java 21 String Templates
+
+This repository accompanies talk "Elementary Hypermedia Web-Stack with Java 21 String Templates".
+It demonstrates no-dependency web server which serves an example shopping cart by means of plain HTML forms, https://unpolyjs.com/[Unpoly] and https://htmx.org/[HTMX].
+
+== Server implementation
+
+Server uses Java built-in HTTP Server https://docs.oracle.com/en/java/javase/21/docs/api/jdk.httpserver/module-summary.html[`jdk.httpserver`], server with virtual threads.
+A small adapter is written around its API, in order to implement things like path matching, query string and handling of form POSTS.
+That code is located in package link:src/main/java/io/zeromagic/fullstack/server/[`io.zeromagic.fullstack.server`].
+
+Requests are served by implementing `Server.Handler`.
+Handler would go matching attributes of a request such as request path segments and methods and return a response.
+
+== Domain
+
+Data for shopping cart are implemented as few Java records in link:src/main/java/io/zeromagic/fullstack/domain[`io.zeromagic.fullstack.domain`].
+
+== Templating framework
+
+The framework defines a https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/StringTemplate.Processor.html[`StringTemplate.Processor`] which fills the response buffer with constituent parts of template, recursively processing nested String templates.
+The code is defined in link:src/main/java/io/zeromagic/fullstack/templates/Framework.java[`io.zeromagic.fullstack.templates.Framework`].
+
+Based on this framework we define general layout of the page in class link:src/main/java/io/zeromagic/fullstack/templates/Page.java[`Page`].
+The individual pages then extend and override the slots represented by (abstract) methods.
+
+
+
+
+
+
+
+
+
+
+
+
