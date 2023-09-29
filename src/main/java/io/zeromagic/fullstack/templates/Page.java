@@ -22,7 +22,7 @@ public abstract class Page implements Framework.Templated {
                   body > main {
                     --block-spacing-vertical: calc(var(--spacing)*2)
                   }
-                  
+
                   \{ extraStyles() }
                 </style>
               </head>
@@ -71,9 +71,14 @@ public abstract class Page implements Framework.Templated {
     protected abstract Object main();
 
     protected static record NavigationLink(String title, String href) implements Framework.Templated {
+        protected NavigationLink {
+          if (title == null) {
+            throw new NullPointerException("title is required");
+          }
+        }
         @Override
         public StringTemplate template() {
-            return RAW."<li><a href='\{href}'>\{title}</a></li>";
+            return RAW."<li><a href='\{href}'>\{title.toUpperCase()}</a></li>";
         }
     }
 }
